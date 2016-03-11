@@ -34,8 +34,14 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.codehaus.groovy:groovy')
-	runtime('com.h2database:h2')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+
+    compile('org.apache.ignite:ignite-core:1.5.0.final')
+    compile('org.apache.ignite:ignite-spring:1.5.0.final')
+    compile('org.apache.ignite:ignite-slf4j:1.5.0.final')
+
+    runtime('com.h2database:h2')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
 
