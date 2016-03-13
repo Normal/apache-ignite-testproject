@@ -1,7 +1,5 @@
 package ignite.conf
 
-import org.apache.ignite.Ignite
-import org.apache.ignite.Ignition
 import org.apache.ignite.configuration.IgniteConfiguration
 import org.apache.ignite.logger.slf4j.Slf4jLogger
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
@@ -28,10 +26,5 @@ class IgniteContext {
                 peerClassLoadingEnabled: true,
                 gridLogger: new Slf4jLogger()
         )
-    }
-
-    @Bean
-    Ignite ignite(IgniteConfiguration igniteConfiguration) {
-        Ignition.start(igniteConfiguration)
     }
 }

@@ -1,4 +1,4 @@
-package ignite.server
+package ignite.service
 
 import org.apache.ignite.Ignite
 import org.apache.ignite.lang.IgniteRunnable
