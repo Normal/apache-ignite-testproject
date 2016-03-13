@@ -1,7 +1,6 @@
 package ignite.conf
 
 import org.apache.ignite.configuration.IgniteConfiguration
-import org.apache.ignite.logger.slf4j.Slf4jLogger
 import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder
 import org.springframework.context.annotation.Bean
@@ -23,8 +22,7 @@ class IgniteContext {
                                 ]
                         )
                 ),
-                peerClassLoadingEnabled: true,
-                gridLogger: new Slf4jLogger()
+                peerClassLoadingEnabled: true
         )
     }
 }
