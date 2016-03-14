@@ -1,8 +1,6 @@
 package ignite.conf
 
 import ignite.service.CacheLoader
-import org.apache.ignite.Ignite
-import org.apache.ignite.Ignition
 import org.apache.ignite.cache.CacheAtomicityMode
 import org.apache.ignite.cache.CacheMode
 import org.apache.ignite.configuration.CacheConfiguration

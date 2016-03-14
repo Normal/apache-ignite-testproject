@@ -6,7 +6,6 @@ import ignite.repository.PersonRepository
 import ignite.service.ClusterService
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
@@ -28,8 +27,15 @@ class CacheApi {
     }
 
     @RequestMapping("/fromcache")
-    String fromCache() {
-        clusterService.broadcastHelloWorld()
-        "passed!"
+    Map<Integer, Collection<Person>> fromCache() {
+        def cached = clusterService.cachedData()
+        def result = [:]
+
+        cached.eachWithIndex {
+            persons, index ->
+                result.put(index + 1, persons)
+        }
+
+        result
     }
 }

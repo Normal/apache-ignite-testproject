@@ -1,5 +1,6 @@
 package ignite.service
 
+import ignite.model.Person
 import org.apache.ignite.Ignite
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
@@ -10,7 +11,7 @@ class ClusterService {
     @Autowired
     Ignite ignite
 
-    void broadcastHelloWorld() {
-        ignite.compute().broadcast(new HelloWorldJob())
+    List<Collection<Person>> cachedData() {
+        ignite.compute().broadcast(new GetCacheDataJob())
     }
 }
