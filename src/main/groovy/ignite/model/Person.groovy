@@ -6,7 +6,7 @@ import javax.persistence.Table
 
 @Entity
 @Table(name = "persons")
-class Person {
+class Person implements Serializable {
 
     @Id
     long id

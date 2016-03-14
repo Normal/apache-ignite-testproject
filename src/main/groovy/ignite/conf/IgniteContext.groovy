@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Configuration
 class IgniteContext {
 
     @Bean
-    IgniteConfiguration igniteConfiguration(CacheLoader cacheLoader) {
+    IgniteConfiguration igniteConfiguration() {
         new IgniteConfiguration(
                 discoSpi: new TcpDiscoverySpi(
                         ipFinder: new TcpDiscoveryMulticastIpFinder(
@@ -28,12 +28,12 @@ class IgniteContext {
                                 ]
                         )
                 ),
-                lifecycleBeans: cacheLoader,
+                lifecycleBeans: new CacheLoader(),
                 peerClassLoadingEnabled: true,
                 cacheCfg: [
                         new CacheConfiguration(
                                 name: "person",
-                                cacheMode: CacheMode.REPLICATED,
+                                cacheMode: CacheMode.PARTITIONED,
                                 atomicityMode: CacheAtomicityMode.TRANSACTIONAL
 //                                cacheStoreFactory: FactoryBuilder.factoryOf(PersonCacheAdapter),
 //                                writeThrough: true,
@@ -41,10 +41,5 @@ class IgniteContext {
                         )
                 ]
         )
-    }
-
-    @Bean
-    Ignite ignite(IgniteConfiguration igniteConfiguration) {
-        Ignition.start(igniteConfiguration)
     }
 }
