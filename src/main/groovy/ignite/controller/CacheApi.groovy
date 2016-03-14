@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
 
 @RestController
-@RequestMapping(path = "/person", method = RequestMethod.GET)
+@RequestMapping(path = "/api", method = RequestMethod.GET)
 @Slf4j
-class PersonController {
+class CacheApi {
 
     @Autowired
     PersonRepository personRepository
@@ -22,13 +22,13 @@ class PersonController {
     @Autowired
     ClusterService clusterService
 
-    @RequestMapping("/all")
-    List<Person> all() {
+    @RequestMapping("/fromdb")
+    List<Person> fromDb() {
         personRepository.all()
     }
 
-    @RequestMapping("/hello")
-    String broadcast() {
+    @RequestMapping("/fromcache")
+    String fromCache() {
         clusterService.broadcastHelloWorld()
         "passed!"
     }

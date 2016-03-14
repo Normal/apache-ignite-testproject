@@ -2,11 +2,11 @@ package ignite.service
 
 import org.apache.ignite.Ignite
 import org.apache.ignite.lang.IgniteRunnable
-import org.apache.ignite.resources.SpringResource
+import org.apache.ignite.resources.IgniteInstanceResource
 
 class HelloWorldJob implements IgniteRunnable {
 
-//    @SpringResource(resourceName = "ignite")
+    @IgniteInstanceResource
     Ignite ignite
 
     @Override

@@ -14,7 +14,7 @@ import org.springframework.jdbc.core.RowMapper
 import java.sql.ResultSet
 import java.sql.SQLException
 
-class CacheLoader implements LifecycleBean, Serializable {
+class CacheLoader implements LifecycleBean {
 
     @IgniteInstanceResource
     transient Ignite ignite
@@ -31,34 +31,21 @@ class CacheLoader implements LifecycleBean, Serializable {
         if (evt == LifecycleEventType.AFTER_NODE_START) {
             IgniteCache<Long, Person> cache = ignite.cache("person")
 
-            def key = 1l
-            def person = jdbcTemplate.queryForObject("select * from persons where id = ?", new RowMapper<Person>() {
-                @Override public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
-                    return new Person(
+            def persons = jdbcTemplate.query("select * from persons", new RowMapper<Person>() {
+
+                @Override
+                Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                    new Person(
                             id: rs.getLong(1),
                             balance: rs.getLong(2),
                             type: rs.getLong(3)
                     )
                 }
-            }, key);
+            })
 
-//            def persons = jdbcTemplate.queryForList("select * from persons", Person, new RowMapper<Person>() {
-//
-//                @Override
-//                Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
-//                    new Person(
-//                            id: rs.getLong(1),
-//                            balance: rs.getLong(2),
-//                            type: rs.getLong(3)
-//                    )
-//                }
-//            })
-
-            cache.put(1l, person)
-
-//            persons.each {
-//                cache.put(it.id, it)
-//            }
+            persons.each {
+                cache.put(it.id, it)
+            }
         }
 
     }

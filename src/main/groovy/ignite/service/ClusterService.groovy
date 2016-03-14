@@ -11,6 +11,6 @@ class ClusterService {
     Ignite ignite
 
     void broadcastHelloWorld() {
-        ignite.compute().broadcast(new HelloWorldJob(ignite: ignite))
+        ignite.compute().broadcast(new HelloWorldJob())
     }
 }
