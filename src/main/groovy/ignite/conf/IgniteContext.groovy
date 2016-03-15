@@ -1,6 +1,7 @@
 package ignite.conf
 
 import ignite.service.CacheLoader
+import ignite.service.PersonCacheAdapter
 import org.apache.ignite.cache.CacheAtomicityMode
 import org.apache.ignite.cache.CacheMode
 import org.apache.ignite.configuration.CacheConfiguration
@@ -9,6 +10,8 @@ import org.apache.ignite.spi.discovery.tcp.TcpDiscoverySpi
 import org.apache.ignite.spi.discovery.tcp.ipfinder.multicast.TcpDiscoveryMulticastIpFinder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+
+import javax.cache.configuration.FactoryBuilder
 
 @Configuration
 class IgniteContext {
@@ -26,16 +29,16 @@ class IgniteContext {
                                 ]
                         )
                 ),
-                lifecycleBeans: new CacheLoader(),
+//                lifecycleBeans: new CacheLoader(),
                 peerClassLoadingEnabled: true,
                 cacheCfg: [
                         new CacheConfiguration(
                                 name: "person",
                                 cacheMode: CacheMode.PARTITIONED,
-                                atomicityMode: CacheAtomicityMode.TRANSACTIONAL
-//                                cacheStoreFactory: FactoryBuilder.factoryOf(PersonCacheAdapter),
-//                                writeThrough: true,
-//                                readThrough: true
+                                atomicityMode: CacheAtomicityMode.TRANSACTIONAL,
+                                cacheStoreFactory: FactoryBuilder.factoryOf(PersonCacheAdapter),
+                                writeThrough: true,
+                                readThrough: true
                         )
                 ]
         )

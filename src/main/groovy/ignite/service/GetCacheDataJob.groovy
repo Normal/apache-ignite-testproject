@@ -14,6 +14,6 @@ class GetCacheDataJob implements IgniteCallable<Collection<Person>> {
     Collection<Person> call() throws Exception {
         def cache = ignite.getOrCreateCache("person")
 
-        cache.getAll(1l .. 10l).values()
+        cache.getAll(1l .. 5l).values()
     }
 }

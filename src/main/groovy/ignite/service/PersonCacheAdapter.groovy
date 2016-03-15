@@ -1,32 +1,47 @@
 package ignite.service
 
 import ignite.model.Person
-import ignite.repository.PersonRepository
 import org.apache.ignite.cache.store.CacheStoreAdapter
-import org.apache.ignite.resources.SpringResource
+import org.h2.jdbcx.JdbcConnectionPool
+import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.jdbc.core.RowMapper
 
 import javax.cache.Cache
 import javax.cache.integration.CacheLoaderException
 import javax.cache.integration.CacheWriterException
+import java.sql.ResultSet
+import java.sql.SQLException
 
 class PersonCacheAdapter extends CacheStoreAdapter<Long, Person> implements Serializable {
 
-    @SpringResource(resourceName = "personRepository")
-    transient PersonRepository personRepository
+    transient JdbcTemplate jdbcTemplate
+
+    PersonCacheAdapter () {
+        jdbcTemplate = new JdbcTemplate(JdbcConnectionPool.create("jdbc:h2:tcp://localhost/~/test", "sa", ""))
+    }
 
     @Override
     Person load(Long key) throws CacheLoaderException {
-        personRepository.get(key)
+        jdbcTemplate.queryForObject("select * from persons where id = ?", new RowMapper<Person>() {
+
+            @Override
+            Person mapRow(final ResultSet rs, final int rowNum) throws SQLException {
+                new Person(
+                        id: rs.getLong(1),
+                        balance: rs.getLong(2),
+                        type: rs.getLong(3)
+                )
+            }
+        }, key)
     }
 
     @Override
     void write(Cache.Entry<? extends Long, ? extends Person> entry) throws CacheWriterException {
-        entry.value.id  = entry.key
-        personRepository.save(entry.value)
+
     }
 
     @Override
     void delete(Object key) throws CacheWriterException {
-        personRepository.delete(key as Long)
+
     }
 }
