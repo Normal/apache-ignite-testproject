@@ -34,11 +34,12 @@ class IgniteContext {
                 cacheCfg: [
                         new CacheConfiguration(
                                 name: "person",
-                                cacheMode: CacheMode.PARTITIONED,
-                                atomicityMode: CacheAtomicityMode.TRANSACTIONAL,
-                                cacheStoreFactory: FactoryBuilder.factoryOf(PersonCacheAdapter),
-                                writeThrough: true,
-                                readThrough: true
+                                backups: 0,
+                                cacheMode: CacheMode.PARTITIONED
+//                                atomicityMode: CacheAtomicityMode.TRANSACTIONAL,
+//                                cacheStoreFactory: FactoryBuilder.factoryOf(PersonCacheAdapter),
+//                                writeThrough: true,
+//                                readThrough: true
                         )
                 ]
         )

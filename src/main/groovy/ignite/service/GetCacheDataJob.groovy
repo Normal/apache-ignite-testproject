@@ -13,6 +13,7 @@ class GetCacheDataJob implements IgniteCallable<Collection<Person>> {
     @Override
     Collection<Person> call() throws Exception {
         def cache = ignite.getOrCreateCache("person")
+        cache.rebalance()
 
         cache.getAll(1l .. 5l).values()
     }
