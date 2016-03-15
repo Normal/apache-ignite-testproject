@@ -17,16 +17,16 @@ class ClusterService {
     @Autowired
     PersonRepository repository
 
-    @PostConstruct
-    void init() {
-        def personMap = [:]
-
-        repository.all().each {
-            personMap.put(it.id, it)
-        }
-
-        ignite.cache("person").putAll(personMap)
-    }
+//    @PostConstruct
+//    void init() {
+//        def personMap = [:]
+//
+//        repository.all().each {
+//            personMap.put(it.id, it)
+//        }
+//
+//        ignite.cache("person").putAll(personMap)
+//    }
 
     List<Collection<Person>> cachedData() {
         ignite.compute().broadcast(new GetCacheDataJob())

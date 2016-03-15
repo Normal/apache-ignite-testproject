@@ -29,7 +29,7 @@ class IgniteContext {
                                 ]
                         )
                 ),
-//                lifecycleBeans: new CacheLoader(),
+                lifecycleBeans: new CacheLoader(),
                 peerClassLoadingEnabled: true,
                 cacheCfg: [
                         new CacheConfiguration(
